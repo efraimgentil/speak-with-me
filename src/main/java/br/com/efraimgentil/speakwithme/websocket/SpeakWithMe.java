@@ -12,6 +12,8 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 import br.com.efraimgentil.speakwithme.model.User;
+import br.com.efraimgentil.speakwithme.model.constants.SessionKeys;
+import br.com.efraimgentil.speakwithme.model.constants.WsSessionKeys;
 import br.com.efraimgentil.speakwithme.service.Chat;
 
 @ServerEndpoint(value = "/speak/"
@@ -27,9 +29,9 @@ public class SpeakWithMe {
   @OnOpen
   public void open(Session session , EndpointConfig config){
     System.out.println("OPEN");
-    session.getUserProperties().put( "HTTP_SESSION" , config.getUserProperties().get( "HTTP_SESSION" ) );
-    HttpSession httpSession =  (HttpSession) session.getUserProperties().get( "HTTP_SESSION"  );
-    User user = (User) httpSession.getAttribute( "authenticated" );
+    HttpSession httpSession =  (HttpSession) config.getUserProperties().get( WsSessionKeys.HTTP_SESSION );
+    session.getUserProperties().put( WsSessionKeys.HTTP_SESSION , httpSession );
+    User user = (User) httpSession.getAttribute( SessionKeys.USER_AUTHENTICATED );
     try {
       chat.connectUser(user, session);
     } catch (IOException | EncodeException e) {

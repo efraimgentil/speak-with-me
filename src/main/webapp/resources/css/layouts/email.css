@@ -21,6 +21,18 @@ table, tr, td {
 	border-spacing: 0px;
 }
 
+#td-chat-area p {
+	margin: 0px;
+}
+#tr-chat-form textarea{
+	width: 100%;
+	resize: none;
+}
+#div-textarea{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
 .hidden {
 	display: none !important;
 }

@@ -38,7 +38,7 @@
 		<tr id="tr-chat-form">
 			<td>
 				<form action="">
-					<div>
+					<div id="div-textarea">
 						<textarea rows="" cols=""></textarea>
 					</div>
 					<div>

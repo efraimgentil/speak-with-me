@@ -40,8 +40,13 @@ public class SpeakWithMe {
   }
   
   @OnMessage
-  public void receiveMessage(String message){
+  public void receiveMessage(String message , Session session){
     System.out.println("MESSAGE");
+    try {
+      chat.receiveMessage(message, session);
+    } catch (IOException | EncodeException e) {
+      e.printStackTrace();
+    }
   }
   
   @OnError

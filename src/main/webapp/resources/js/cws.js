@@ -20,9 +20,7 @@ var CWS = function(options ) {
 			console.log("MESSAGE ");
 			console.log( message.data );
 			var json = JSON.parse(message.data);
-			if(json.userWhoSend === "SYSTEM"){
-				cws.appendText(json.date  + " - " + json.userWhoSend + ": " + json.body );
-			}
+			cws.appendText(json.date  + " - " + json.userWhoSend + ": " + json.body );
 			console.log( json );
 		},
 		onClose : function(data){
@@ -35,6 +33,10 @@ var CWS = function(options ) {
 			p = document.createElement("p");
 			p.textContent = text;
 			a.appendChild( p );
+		},
+		sendMessage: function(message , callback){
+			cws.websocket.send(message);
+			if(callback) callback();
 		}
 	};
 	return cws;

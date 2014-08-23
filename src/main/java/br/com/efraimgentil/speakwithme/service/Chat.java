@@ -2,13 +2,16 @@ package br.com.efraimgentil.speakwithme.service;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpSession;
 import javax.websocket.EncodeException;
 import javax.websocket.RemoteEndpoint.Basic;
 import javax.websocket.Session;
 
 import br.com.efraimgentil.speakwithme.model.Message;
 import br.com.efraimgentil.speakwithme.model.User;
+import br.com.efraimgentil.speakwithme.model.constants.SessionKeys;
 import br.com.efraimgentil.speakwithme.model.constants.UserType;
+import br.com.efraimgentil.speakwithme.model.constants.WsSessionKeys;
 
 public class Chat {
   
@@ -30,7 +33,19 @@ public class Chat {
       }
     }
   }
-  
+
+  public void receiveMessage(String message , Session session ) throws IOException, EncodeException{
+    HttpSession httpSession = (HttpSession) session.getUserProperties().get( WsSessionKeys.HTTP_SESSION );
+    User user = (User) httpSession.getAttribute( SessionKeys.USER_AUTHENTICATED );
+    String username = user.getUsername();
+    session.getBasicRemote().sendObject( Message.userMessage(username, message) );
+    if(owner != null){
+      
+    }else{
+      session.getUserProperties().put( WsSessionKeys.OWNER_NOT_LOGGED , true );
+      session.getBasicRemote().sendObject( Message.infoMessage("The owner is not logged in, your message will be delivered when him enter") );
+    }
+  }
 //  public void receiveMessage(String message , Session session ) throws IOException{
 //    String userId = (String) session.getUserProperties().get("USER_ID");
 //    User user = userSession.getUser();

@@ -39,10 +39,10 @@
 			<td>
 				<form action="">
 					<div id="div-textarea">
-						<textarea rows="" cols=""></textarea>
+						<textarea id="messageTextArea" rows="" cols=""></textarea>
 					</div>
 					<div>
-						<button>Send</button>
+						<button id="submit">Send</button>
 						<button>Clean</button>
 					</div>
 				</form>
@@ -57,6 +57,17 @@
         	    }
         var cws = new CWS( options );
         cws.connect();
+        
+        var submitBtn = document.getElementById("submit");
+        submitBtn.onclick = function(e){
+            if(this.disabled == false){
+            	var btn = this;
+            	btn.disabled = true;
+	            var component = document.getElementById("messageTextArea");        
+	            cws.sendMessage(component.value , function(){ btn.disabled = false; });
+            }
+            return false;
+        } 
 	</script>
 </body>
 </html>

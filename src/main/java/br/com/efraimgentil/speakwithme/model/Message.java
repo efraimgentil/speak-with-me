@@ -32,7 +32,15 @@ public class Message implements Serializable {
     return m;
   }
   
-  
+  public static Message userMessage(String username , String body){
+    Message m = new Message();
+    m.userWhoSend = username;
+    m.date = new Date();
+    m.body = body;
+    m.type = MessageType.SENDER;
+    return m;
+  }
+
   public String getUserWhoSend() {
     return userWhoSend;
   }

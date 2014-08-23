@@ -4,6 +4,9 @@ public enum MessageType {
   
   WARN,
   INFO,
-  ERRO
+  ERRO,
+  ALERT,
+  SENDER,
+  DESTINATARY
   
 }

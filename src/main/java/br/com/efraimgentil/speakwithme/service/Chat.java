@@ -1,12 +1,15 @@
 package br.com.efraimgentil.speakwithme.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.websocket.EncodeException;
 import javax.websocket.RemoteEndpoint.Basic;
 import javax.websocket.Session;
 
+import br.com.efraimgentil.speakwithme.model.Guest;
 import br.com.efraimgentil.speakwithme.model.Message;
 import br.com.efraimgentil.speakwithme.model.User;
 import br.com.efraimgentil.speakwithme.model.constants.SessionKeys;
@@ -18,18 +21,31 @@ public class Chat {
   private Session owner;
   
   public void connectUser( User user , Session session ) throws IOException, EncodeException{
-    session.getBasicRemote().sendObject( Message.infoMessage("You are now connected") );
+    Basic basicRemote = session.getBasicRemote();
+    basicRemote.sendObject( Message.infoMessage("You are now connected") );
     
     if( isOwner(user) ){
       owner = session;
+      List<Session> onlineGuests = new ArrayList<>();
       for (Session otherSession : session.getOpenSessions()) {
         if(!otherSession.getId().equals( session.getId() )){
           otherSession.getBasicRemote().sendObject( Message.infoMessage("The chat owner is now online") );
+          onlineGuests.add(session);
         }
+      }
+      List<Guest> guests = new ArrayList<>();
+      for (Session sessionGuest : onlineGuests) {
+        HttpSession httpSession = (HttpSession) sessionGuest.getUserProperties().get( WsSessionKeys.HTTP_SESSION );
+        User guestUser =  (User) httpSession.getAttribute( SessionKeys.USER_AUTHENTICATED );
+        Guest guest = new Guest( sessionGuest.getId() , guestUser.getUsername() );
+        guests.add(guest);
+      }
+      if(!guests.isEmpty()){
+        basicRemote.sendObject( guests );
       }
     }else{
       if(owner == null){
-        session.getBasicRemote().sendObject( Message.infoMessage("Sorry to inform you but owner of this chat is offline") );
+        basicRemote.sendObject( Message.infoMessage("Sorry to inform you but owner of this chat is offline") );
       }
     }
   }

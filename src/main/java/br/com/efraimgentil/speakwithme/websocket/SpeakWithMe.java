@@ -17,7 +17,7 @@ import br.com.efraimgentil.speakwithme.model.constants.WsSessionKeys;
 import br.com.efraimgentil.speakwithme.service.Chat;
 
 @ServerEndpoint(value = "/speak/"
-, encoders = { MessageEncoder.class }
+, encoders = { MessageEncoder.class  , GuestsEncoder.class }
 , configurator = CustomConfigurator.class)
 public class SpeakWithMe {
   
@@ -54,7 +54,5 @@ public class SpeakWithMe {
     System.out.println( "Sorry but there is a error, closing!" );
     System.out.println( e.getMessage() );
   }
-  
-  
 
 }

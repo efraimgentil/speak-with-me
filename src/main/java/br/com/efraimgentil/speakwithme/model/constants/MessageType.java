@@ -6,6 +6,8 @@ public enum MessageType {
   INFO,
   ERRO,
   ALERT,
+  USERS_CONNECTED,
+  NEW_USER_CONNECTED,
   SENDER,
   DESTINATARY
   

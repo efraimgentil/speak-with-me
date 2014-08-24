@@ -31,8 +31,6 @@
 		</tr>
 		<tr>
 			<td id="td-chat-area">
-				<!-- 					<div id="area"> -->
-				<p>HAHA</p> <!-- 					</div> -->
 			</td>
 		</tr>
 		<tr id="tr-chat-form">

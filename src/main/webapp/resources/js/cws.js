@@ -20,7 +20,7 @@ var CWS = function(options ) {
 			console.log("MESSAGE ");
 			console.log( message.data );
 			var json = JSON.parse(message.data);
-			cws.appendText(json.date  + " - " + json.userWhoSend + ": " + json.body );
+			cws.appendText(json.date  + " - " + json.userWhoSend + ": " + json.body , json.type );
 			console.log( json );
 		},
 		onClose : function(data){
@@ -28,9 +28,12 @@ var CWS = function(options ) {
 			console.log( data );
 			cws.appendText( "Connection closed ");
 		},
-		appendText: function(text){
+		appendText: function(text , type){
 			var a = document.getElementById( options.messageArea );
 			p = document.createElement("p");
+			if(type){
+				p.classList.add(type.toLowerCase());
+			}
 			p.textContent = text;
 			a.appendChild( p );
 		},

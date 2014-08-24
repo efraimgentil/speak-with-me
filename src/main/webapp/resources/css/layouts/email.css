@@ -16,6 +16,16 @@ a {
 	color: #1b98f8;
 }
 
+p.info{
+	color: #336677;
+}
+p.sender{
+	color: #663377;
+}
+p.error{
+	color: #CC0022;
+}
+
 table, tr, td {
 	border: 0px;
 	border-spacing: 0px;

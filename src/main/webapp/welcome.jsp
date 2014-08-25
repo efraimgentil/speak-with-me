@@ -10,7 +10,7 @@
 	content="A layout example that shows off a responsive email layout.">
 <title>Email &ndash; Layout Examples &ndash; Pure</title>
 <link rel="stylesheet"
-	href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+	href="${pageContext.request.contextPath}/resources/css/pure-min.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/layouts/email.css">
 <title>Chat - WebSocket</title>

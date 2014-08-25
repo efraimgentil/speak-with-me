@@ -12,7 +12,8 @@
 <link type="text/css" rel="stylesheet"
 	href="${cPath}/resources/css/chat_websocket.css" />
 <link rel="stylesheet"
-	href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+${cPath}
+	href="${cPath}/resources/css/pure-min.css">
 <link rel="stylesheet" href="${cPath}/resources/css/layouts/email.css">
 
 <script type="text/javascript" src="${cPath}/resources/js/cws.js"></script>
@@ -60,7 +61,8 @@
 	<script type="text/javascript">
 		var options = {
 			wsUri : prepareURI("${cPath}"),
-			messageArea : "area"
+			messageArea : "area",
+			userListApender : appendUser,
 		}
 		var cws = new CWS(options);
 		cws.connect();

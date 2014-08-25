@@ -11,7 +11,7 @@
 <c:set var="cPath" value="${pageContext.request.contextPath}"
 	scope="request" />
 <link rel="stylesheet"
-	href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+	href="${cPath}/resources/css/pure-min.css">
 <link rel="stylesheet" href="${cPath}/resources/css/layouts/email.css">
 
 <script type="text/javascript" src="${cPath}/resources/js/cws.js"></script>

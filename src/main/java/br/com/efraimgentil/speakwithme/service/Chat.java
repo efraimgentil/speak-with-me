@@ -30,7 +30,7 @@ public class Chat {
       for (Session otherSession : session.getOpenSessions()) {
         if(!otherSession.getId().equals( session.getId() )){
           otherSession.getBasicRemote().sendObject( Message.infoMessage("The chat owner is now online") );
-          onlineGuests.add(session);
+          onlineGuests.add(otherSession);
         }
       }
       List<Guest> guests = new ArrayList<>();

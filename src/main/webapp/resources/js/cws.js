@@ -6,6 +6,7 @@ var CWS = function(options ) {
 	var cws = {
 	    wsUri : options.wsUri,
 		websocket : null,
+		userListApender : options.userListApender || undefined,
 		connect : function() {
 			this.websocket = new WebSocket( this.wsUri );
 			this.websocket.cws = this;
@@ -23,7 +24,15 @@ var CWS = function(options ) {
 			console.log( json );
 			
 			if("USERS_CONNECTED" == json.type){
-				
+				if(cws.userListApender == undefined){
+					console.log("You should inform the options.userListApender attribute");
+				}else{
+					var guests = json.guests;
+					var guestLength = guests.length;
+					for( i = 0 ; i < guestLength ; i++ ){
+						cws.userListApender( guests[i] );
+					} 
+				}
 			}else{
 				cws.appendText(json.date  + " - " + json.userWhoSend + ": " + json.body , json.type );
 			}

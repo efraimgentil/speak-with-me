@@ -90,14 +90,18 @@ ${cPath}
 			div.innerHTML = asString;
 			t1 = div.childNodes[0];
 			t1.classList.remove("template");
+			t1.classList.add("email-item");
+			t1.classList.add("pure-g");
+			//email-item email-item-selected 
 			t1.removeAttribute("xmlns");
+			t1.removeAttribute("id");
 			var list = document.getElementById("list");
 			list.appendChild(t1);
 	    }
 		
 	</script>
 
-	<div id="user-template" class="email-item email-item-selected pure-g template">
+	<div id="user-template" class="template">
         <div class="hidden">{{{id}}}</div>
 		<div class="pure-u-3-4">
 			<h5 class="email-name">{{{userName}}}</h5>

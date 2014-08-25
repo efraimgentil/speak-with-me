@@ -20,6 +20,9 @@ public class MessageEncoder implements Encoder.Text<Message> {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     generator.writeStartObject();
     generator.write( "userWhoSend" , object.getUserWhoSend() );
+    if (object.getUserId()  != null){
+      generator.write( "userId" ,  object.getUserId() );
+    } 
     generator.write( "date" ,  sdf.format( object.getDate() ) );
     generator.write( "body" , object.getBody() );
     generator.write( "type" , object.getType().toString() );

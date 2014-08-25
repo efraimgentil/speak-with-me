@@ -56,7 +56,7 @@ public class Chat {
     String username = user.getUsername();
     session.getBasicRemote().sendObject( Message.userMessage(username, message) );
     if(owner != null){
-      
+      owner.getBasicRemote().sendObject( Message.userMessage( user.getUsername() , session.getId()  , message ) );
     }else{
       session.getUserProperties().put( WsSessionKeys.OWNER_NOT_LOGGED , true );
       session.getBasicRemote().sendObject( Message.infoMessage("The owner is not logged in, your message will be delivered when him enter") );

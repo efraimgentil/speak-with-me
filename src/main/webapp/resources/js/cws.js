@@ -7,6 +7,8 @@ var CWS = function(options ) {
 	    wsUri : options.wsUri,
 		websocket : null,
 		userListApender : options.userListApender || undefined,
+		usersOnline : {},
+		currentUser : null,
 		connect : function() {
 			this.websocket = new WebSocket( this.wsUri );
 			this.websocket.cws = this;
@@ -30,11 +32,21 @@ var CWS = function(options ) {
 					var guests = json.guests;
 					var guestLength = guests.length;
 					for( i = 0 ; i < guestLength ; i++ ){
-						cws.userListApender( guests[i] );
+						var guest = guests[i];
+						cws.userListApender( guest );
+						cws.usersOnline[guest.id] = guest;
 					} 
 				}
 			}else{
-				cws.appendText(json.date  + " - " + json.userWhoSend + ": " + json.body , json.type );
+				//cws.appendText(json.date  + " - " + json.userWhoSend + ": " + json.body , json.type );
+				var user = cws.usersOnline[json.userId];
+				if( currentUser == null || user.id == currentUser.id ){
+					cws.appendText(json.date  + " - " + json.userWhoSend + ": " + json.body , json.type );
+				}
+				if(user != null && user != undefined){
+					user["messages"] = user["messages"] || [];
+					user["messages"].push( json );
+				}
 			}
 		},
 		onClose : function(data){

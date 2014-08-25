@@ -9,6 +9,7 @@ public class Message implements Serializable {
 
   private static final long serialVersionUID = -5717764420030621011L;
   
+  private String userId;
   private String userWhoSend;
   private Date date;
   private String body;
@@ -40,6 +41,17 @@ public class Message implements Serializable {
     m.type = MessageType.SENDER;
     return m;
   }
+  
+  public static Message userMessage(String username , String userId , String body){
+    Message m = new Message();
+    m.userWhoSend = username;
+    m.userId = userId;
+    m.date = new Date();
+    m.body = body;
+    m.type = MessageType.DESTINATARY;
+    return m;
+  }
+  
 
   public String getUserWhoSend() {
     return userWhoSend;
@@ -64,6 +76,14 @@ public class Message implements Serializable {
   }
   public void setType(MessageType type) {
     this.type = type;
+  }
+
+  public String getUserId() {
+    return userId;
+  }
+
+  public void setUserId(String userId) {
+    this.userId = userId;
   }
 
 }

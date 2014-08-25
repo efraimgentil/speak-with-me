@@ -43,8 +43,8 @@ public class LoginServlet extends HttpServlet {
       HttpSession session = req.getSession(true);
       session.setAttribute( SessionKeys.IS_LOGGED , true );
       session.setAttribute( SessionKeys.USER_AUTHENTICATED , authenticatedUser );
-      if(UserType.OWNER.equals( user.getUserType() )){
-        resp.sendRedirect("/owner.jsp");
+      if(UserType.OWNER.equals( authenticatedUser.getUserType() )){
+        resp.sendRedirect("owner.jsp");
       }else{
         resp.sendRedirect("chat.jsp");
       }

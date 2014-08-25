@@ -31,7 +31,7 @@ table, tr, td {
 	border-spacing: 0px;
 }
 
-#td-chat-area p {
+#td-chat-area p ,#area p{
 	margin: 0px;
 }
 #tr-chat-form textarea{
@@ -43,7 +43,7 @@ table, tr, td {
 	padding-right: 10px;
 }
 
-.hidden {
+.hidden , .template {
 	display: none !important;
 }
 

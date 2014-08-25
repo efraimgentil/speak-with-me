@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.efraimgentil.speakwithme.model.Guest;
-
+import br.com.efraimgentil.speakwithme.model.constants.MessageType;
 import static  org.junit.Assert.*;
 
 public class GuestEncoderTest {
@@ -50,6 +50,17 @@ public class GuestEncoderTest {
     
     assertNotNull(encoded);
     assertTrue( encoded.contains("\"guests\":[]") );
+  }
+  
+  @Test
+  public void doesIncludeMessageTypeToTheEncodedList() throws EncodeException{
+    List<Guest> guests = new ArrayList<>();
+    
+    String encoded = guestsEncoder.encode( guests );
+    
+    assertNotNull(encoded);
+    assertTrue("The message tyep should be MessageType.USERS_CONNECTED"
+        , encoded.contains("\"type\":\""+ MessageType.USERS_CONNECTED.toString()  +"\"") );
   }
   
 }

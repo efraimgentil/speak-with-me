@@ -17,11 +17,16 @@ var CWS = function(options ) {
 			console.log("CONNECT");
 		},
 		onMessage : function(message) {
-			console.log("MESSAGE ");
+			console.log("RECEIVING MESSAGE...");
 			console.log( message.data );
 			var json = JSON.parse(message.data);
-			cws.appendText(json.date  + " - " + json.userWhoSend + ": " + json.body , json.type );
 			console.log( json );
+			
+			if("USERS_CONNECTED" == json.type){
+				
+			}else{
+				cws.appendText(json.date  + " - " + json.userWhoSend + ": " + json.body , json.type );
+			}
 		},
 		onClose : function(data){
 			console.log("CLOSE");

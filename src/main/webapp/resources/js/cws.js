@@ -7,7 +7,18 @@ var CWS = function(options ) {
 	    wsUri : options.wsUri,
 		websocket : null,
 		userListApender : options.userListApender || undefined,
-		usersOnline : {},
+		usersOnline : { 
+			
+			length : function(){
+				var size = 0
+				for( k in this){
+					if(k != "length"){
+						size++;
+					}
+				}
+				return size;
+			}
+		},
 		currentUser : null,
 		connect : function() {
 			this.websocket = new WebSocket( this.wsUri );
@@ -25,7 +36,9 @@ var CWS = function(options ) {
 			var json = JSON.parse(message.data);
 			console.log( json );
 			
-			if("USERS_CONNECTED" == json.type){
+			var messageType = json.type;
+			
+			if("UPDATE" == messageType){
 				if(cws.userListApender == undefined){
 					console.log("You should inform the options.userListApender attribute");
 				}else{
@@ -37,11 +50,11 @@ var CWS = function(options ) {
 						cws.usersOnline[guest.id] = guest;
 					} 
 				}
-			}else{
-				//cws.appendText(json.date  + " - " + json.userWhoSend + ": " + json.body , json.type );
+			}
+			if("MESSAGE" == messageType){
 				var user = cws.usersOnline[json.userId];
-				if( currentUser == null || user.id == currentUser.id ){
-					cws.appendText(json.date  + " - " + json.userWhoSend + ": " + json.body , json.type );
+				if( ( cws.currentUser == null && cws.usersOnline.length() == 0 ) || ( user != undefined && cws.currentUser != null && user['id'] == cws.currentUser.id )  ){
+					cws.appendText(json.date  + " - " + json.userWhoSend + ": " + json.body , json.level );
 				}
 				if(user != null && user != undefined){
 					user["messages"] = user["messages"] || [];
@@ -54,11 +67,11 @@ var CWS = function(options ) {
 			console.log( data );
 			cws.appendText( "Connection closed ");
 		},
-		appendText: function(text , type){
+		appendText: function(text , level){
 			var a = document.getElementById( options.messageArea );
 			p = document.createElement("p");
-			if(type){
-				p.classList.add(type.toLowerCase());
+			if(level){
+				p.classList.add(level.toLowerCase());
 			}
 			p.textContent = text;
 			a.appendChild( p );

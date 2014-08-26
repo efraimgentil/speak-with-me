@@ -10,6 +10,7 @@ import javax.websocket.Encoder;
 import javax.websocket.EndpointConfig;
 
 import br.com.efraimgentil.speakwithme.model.Message;
+import br.com.efraimgentil.speakwithme.model.constants.MessageType;
 
 public class MessageEncoder implements Encoder.Text<Message> {
 
@@ -25,7 +26,8 @@ public class MessageEncoder implements Encoder.Text<Message> {
     } 
     generator.write( "date" ,  sdf.format( object.getDate() ) );
     generator.write( "body" , object.getBody() );
-    generator.write( "type" , object.getType().toString() );
+    generator.write( "level" , object.getLevel().toString() );
+    generator.write( "type" , MessageType.MESSAGE.toString() );
     generator.writeEnd().flush();
     return writer.toString();
   }

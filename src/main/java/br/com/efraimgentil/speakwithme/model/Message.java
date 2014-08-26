@@ -3,7 +3,7 @@ package br.com.efraimgentil.speakwithme.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import br.com.efraimgentil.speakwithme.model.constants.MessageType;
+import br.com.efraimgentil.speakwithme.model.constants.MessageLevel;
 
 public class Message implements Serializable {
 
@@ -13,7 +13,7 @@ public class Message implements Serializable {
   private String userWhoSend;
   private Date date;
   private String body;
-  private MessageType type;
+  private MessageLevel level;
  
   public Message() {  }
   
@@ -29,7 +29,7 @@ public class Message implements Serializable {
     m.userWhoSend = "SYSTEM";
     m.date = new Date();
     m.body = body;
-    m.type = MessageType.INFO;
+    m.level = MessageLevel.INFO;
     return m;
   }
   
@@ -38,7 +38,7 @@ public class Message implements Serializable {
     m.userWhoSend = username;
     m.date = new Date();
     m.body = body;
-    m.type = MessageType.SENDER;
+    m.level = MessageLevel.SENDER;
     return m;
   }
   
@@ -48,7 +48,7 @@ public class Message implements Serializable {
     m.userId = userId;
     m.date = new Date();
     m.body = body;
-    m.type = MessageType.DESTINATARY;
+    m.level = MessageLevel.DESTINATARY;
     return m;
   }
   
@@ -71,11 +71,11 @@ public class Message implements Serializable {
   public void setBody(String body) {
     this.body = body;
   }
-  public MessageType getType() {
-    return type;
+  public MessageLevel getLevel() {
+    return level;
   }
-  public void setType(MessageType type) {
-    this.type = type;
+  public void setLevel(MessageLevel level) {
+    this.level = level;
   }
 
   public String getUserId() {

@@ -11,6 +11,7 @@ import javax.websocket.EndpointConfig;
 
 import br.com.efraimgentil.speakwithme.model.Guest;
 import br.com.efraimgentil.speakwithme.model.constants.MessageType;
+import br.com.efraimgentil.speakwithme.model.constants.UpdateType;
 
 public class GuestsEncoder implements Encoder.Text<List<Guest>> {
 
@@ -38,7 +39,8 @@ public class GuestsEncoder implements Encoder.Text<List<Guest>> {
       jg.writeEnd();
     }
     jg.writeEnd();
-    jg.write( "type" , MessageType.USERS_CONNECTED.toString() );
+    jg.write( "type" , MessageType.UPDATE.toString() );
+    jg.write( "updateType" , UpdateType.USERS_CONNECTED.toString() );
     jg.writeEnd();
     jg.flush();
     return writer.toString();

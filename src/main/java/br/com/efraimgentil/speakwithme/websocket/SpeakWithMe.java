@@ -17,7 +17,7 @@ import br.com.efraimgentil.speakwithme.model.constants.WsSessionKeys;
 import br.com.efraimgentil.speakwithme.service.Chat;
 
 @ServerEndpoint(value = "/speak/"
-, encoders = { MessageEncoder.class  , GuestsEncoder.class }
+, encoders = { MessageEncoder.class  , GuestsEncoder.class , GuestEncoder.class }
 , configurator = CustomConfigurator.class)
 public class SpeakWithMe {
   

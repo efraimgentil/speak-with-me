@@ -60,7 +60,7 @@ public class GuestEncoderTest {
     
     assertNotNull(encoded);
     assertTrue("The message tyep should be MessageType.USERS_CONNECTED"
-        , encoded.contains("\"type\":\""+ MessageType.USERS_CONNECTED.toString()  +"\"") );
+        , encoded.contains("\"type\":\""+ MessageType.UPDATE.toString()  +"\"") );
   }
   
 }

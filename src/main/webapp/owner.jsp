@@ -93,7 +93,6 @@ ${cPath}
 			t1.classList.remove("template");
 			t1.classList.add("email-item");
 			t1.classList.add("pure-g");
-			//email-item email-item-selected 
 			t1.removeAttribute("xmlns");
 			t1.removeAttribute("id");
 			t1.onclick = selectUser;
@@ -110,11 +109,6 @@ ${cPath}
             }
             this.classList.add("selected");
         }
-	    
-	    var arr = document.querySelectorAll(".email-item");
-	    for(i = 0 ; i < arr.length ; i++) {
-	      arr[i].onclick = selectUser
-	    }
 	</script>
 
 	<div id="user-template" class="template">

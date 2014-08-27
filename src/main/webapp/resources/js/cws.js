@@ -42,13 +42,20 @@ var CWS = function(options ) {
 				if(cws.userListApender == undefined){
 					console.log("You should inform the options.userListApender attribute");
 				}else{
-					var guests = json.guests;
-					var guestLength = guests.length;
-					for( i = 0 ; i < guestLength ; i++ ){
-						var guest = guests[i];
+					if("USERS_CONNECTED" == json.updateType){
+						var guests = json.guests;
+						var guestLength = guests.length;
+						for( i = 0 ; i < guestLength ; i++ ){
+							var guest = guests[i];
+							cws.userListApender( guest );
+							cws.usersOnline[guest.id] = guest;
+						} 
+					}
+					if("NEW_USER_CONNECTED" == json.updateType ){
+						var guest = json.guest;
 						cws.userListApender( guest );
 						cws.usersOnline[guest.id] = guest;
-					} 
+					}
 				}
 			}
 			if("MESSAGE" == messageType){

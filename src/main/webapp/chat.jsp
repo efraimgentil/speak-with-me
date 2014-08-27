@@ -31,6 +31,9 @@
 		</tr>
 		<tr>
 			<td id="td-chat-area">
+			     <div id="area" style="overflow-y: scroll;height: 100%;">
+			         
+			     </div>
 			</td>
 		</tr>
 		<tr id="tr-chat-form">
@@ -51,7 +54,7 @@
 	<script type="text/javascript">
         var options = { 
         	    wsUri : prepareURI("${cPath}"),
-        	    messageArea: "td-chat-area"
+        	    messageArea: "area"
         	    }
         var cws = new CWS( options );
         cws.connect();

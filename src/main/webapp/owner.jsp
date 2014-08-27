@@ -24,6 +24,7 @@ ${cPath}
 	<div id="layout" class="content pure-g" style="height: 100%">
 		<div id="list" class="pure-u-1">
 			<div class="email-item email-item-selected pure-g">
+			    <div class="hidden id">{{{id}}}</div>
 				<div class="pure-u-3-4">
 					<h5 class="email-name">Tilo Mitra</h5>
 				</div>
@@ -95,14 +96,29 @@ ${cPath}
 			//email-item email-item-selected 
 			t1.removeAttribute("xmlns");
 			t1.removeAttribute("id");
+			t1.onclick = selectUser;
 			var list = document.getElementById("list");
 			list.appendChild(t1);
 	    }
-		
+
+	    function selectUser(){ 
+            var id = this.querySelector(".id").innerText;
+            cws.selectUser(id);
+            var arr = document.querySelectorAll(".email-item");
+            for(i = 0 ; i < arr.length ; i++) {
+              arr[i].classList.remove("selected");
+            }
+            this.classList.add("selected");
+        }
+	    
+	    var arr = document.querySelectorAll(".email-item");
+	    for(i = 0 ; i < arr.length ; i++) {
+	      arr[i].onclick = selectUser
+	    }
 	</script>
 
 	<div id="user-template" class="template">
-        <div class="hidden">{{{id}}}</div>
+        <div class="hidden id">{{{id}}}</div>
 		<div class="pure-u-3-4">
 			<h5 class="email-name">{{{userName}}}</h5>
 		</div>

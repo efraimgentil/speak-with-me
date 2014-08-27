@@ -76,9 +76,28 @@ var CWS = function(options ) {
 			p.textContent = text;
 			a.appendChild( p );
 		},
+		clearTextArea: function(){
+			var a = document.getElementById( options.messageArea );
+			a.innerHTML ="";
+		},
 		sendMessage: function(message , callback){
 			cws.websocket.send(message);
 			if(callback) callback();
+		},
+		selectUser: function(id){
+			cws.currentUser = cws.usersOnline[id] || null;
+			if(cws.currentUser == null ){
+				console.log("User not found");
+			}else{
+				cws.clearTextArea();
+				arrMessages = cws.currentUser["messages"] || [];
+				if(arrMessages.length > 0){
+					for(i = 0 ; i < arrMessages.length ; i++){
+						var json = arrMessages[i];
+						cws.appendText(json.date  + " - " + json.userWhoSend + ": " + json.body , json.level );
+					}
+				}
+			}
 		}
 	};
 	return cws;

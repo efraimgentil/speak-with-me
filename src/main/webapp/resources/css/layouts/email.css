@@ -50,6 +50,9 @@ table, tr, td {
 .email-item{
 	cursor: pointer;
 }
+.selected{
+	background-color: bisque;
+}
 
 .button-success, .button-error, .button-warning, .button-secondary {
 	color: white;

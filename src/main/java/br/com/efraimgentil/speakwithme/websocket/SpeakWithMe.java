@@ -11,6 +11,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import br.com.efraimgentil.speakwithme.model.Message;
 import br.com.efraimgentil.speakwithme.model.User;
 import br.com.efraimgentil.speakwithme.model.constants.SessionKeys;
 import br.com.efraimgentil.speakwithme.model.constants.WsSessionKeys;
@@ -18,6 +19,7 @@ import br.com.efraimgentil.speakwithme.service.Chat;
 
 @ServerEndpoint(value = "/speak/"
 , encoders = { MessageEncoder.class  , GuestsEncoder.class , GuestEncoder.class }
+, decoders = { MessageDecoder.class }
 , configurator = CustomConfigurator.class)
 public class SpeakWithMe {
   
@@ -40,14 +42,27 @@ public class SpeakWithMe {
   }
   
   @OnMessage
-  public void receiveMessage(String message , Session session){
-    System.out.println("MESSAGE");
+  public void receiveAsString(String message , Session session){
+    System.out.println("AS STRING");
+    System.out.println( message );
+//    System.out.println( asMessage );
     try {
-      chat.receiveMessage(message, session);
+        chat.receiveMessage( (String) message, session);
     } catch (IOException | EncodeException e) {
       e.printStackTrace();
     }
   }
+  
+//  @OnMessage
+//  public void receiveAsMessage(Message message, Session session){
+//    System.out.println("AS MESSAGE");
+//    try {
+//      System.out.println( message);
+//      chat.receiveMessage(message, session);
+//    } catch (IOException | EncodeException e) {
+//      e.printStackTrace();
+//    }
+//  }
   
   @OnError
   public void error(Throwable e){

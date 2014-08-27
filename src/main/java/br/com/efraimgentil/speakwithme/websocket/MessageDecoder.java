@@ -17,15 +17,14 @@ public class MessageDecoder implements Decoder.Text<Message> {
   }
 
   public Message decode(String s) throws DecodeException {
-    // TODO Auto-generated method stub
     return null;
   }
 
   public boolean willDecode(String s) {
-    // TODO Auto-generated method stub
+    if(s.toLowerCase().contains("\"type\":\"message\"")){
+      return true;
+    }
     return false;
   }
-
-
 
 }

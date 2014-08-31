@@ -13,6 +13,7 @@ import br.com.efraimgentil.speakwithme.model.Guest;
 import br.com.efraimgentil.speakwithme.model.IncomingMessage;
 import br.com.efraimgentil.speakwithme.model.Message;
 import br.com.efraimgentil.speakwithme.model.User;
+import br.com.efraimgentil.speakwithme.model.constants.MessageLevel;
 import br.com.efraimgentil.speakwithme.model.constants.SessionKeys;
 import br.com.efraimgentil.speakwithme.model.constants.UserType;
 import br.com.efraimgentil.speakwithme.model.constants.WsSessionKeys;
@@ -75,6 +76,16 @@ public class Chat {
     }
   }
   
+  private <T> void sendToSession(T anything, Session session , String destinataryId ) throws IOException, EncodeException{
+    List<Session> guests = retriveGuestSession(session);
+    for (Session session2 : guests) {
+      if(session2.getId().equals(destinataryId)){
+        session2.getBasicRemote().sendObject(anything);
+        break;
+      }
+    }
+  }
+  
   private User extranctUser(Session session){
     HttpSession httpSession = (HttpSession) session.getUserProperties().get( WsSessionKeys.HTTP_SESSION );
     return (User) httpSession.getAttribute( SessionKeys.USER_AUTHENTICATED );
@@ -97,11 +108,19 @@ public class Chat {
     return UserType.OWNER.equals( user.getUserType() );
   }
 
-  public void receiveMessage(IncomingMessage incomingMessage, Session session) throws IOException, EncodeException {
+  public void handleIncomingMessage(IncomingMessage incomingMessage, Session session) throws IOException, EncodeException {
     String username = incomingMessage.getUser().getUsername();
     if(incomingMessage.isMessage()){
       Message message = (Message) incomingMessage.getMessage();
-      session.getBasicRemote().sendObject( Message.userMessage(username, message.getBody() ) );
+      Message selfMessage = Message.userMessage(username, message.getDestinataryId() , message.getBody() );
+      selfMessage.setLevel( MessageLevel.SENDER );
+      session.getBasicRemote().sendObject( selfMessage );
+
+      if(message.getDestinataryId() != null && owner != null && session.getId().equals(owner.getId())){
+        Message userMessage = Message.userMessage(username, message.getDestinataryId() , message.getBody() ) ;
+        sendToSession( userMessage , session , message.getDestinataryId());
+      }
+      
       if(owner != null){
         owner.getBasicRemote().sendObject( Message.userMessage( username , session.getId()  , message.getBody() ) );
       }else{

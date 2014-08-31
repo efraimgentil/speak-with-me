@@ -32,7 +32,6 @@ var CWS = function(options ) {
 		},
 		onMessage : function(message) {
 			console.log("RECEIVING MESSAGE...");
-			console.log( message.data );
 			var json = JSON.parse(message.data);
 			console.log( json );
 			
@@ -76,19 +75,27 @@ var CWS = function(options ) {
 		},
 		appendText: function(text , level){
 			var a = document.getElementById( options.messageArea );
+			p = cws.createTextElement( text , level );
+			a.appendChild( p );
+		},
+		createTextElement: function( text , level){
 			p = document.createElement("p");
 			if(level){
 				p.classList.add(level.toLowerCase());
 			}
 			p.textContent = text;
-			a.appendChild( p );
+			return p;
 		},
 		clearTextArea: function(){
 			var a = document.getElementById( options.messageArea );
 			a.innerHTML ="";
 		},
 		sendMessage: function(message , callback){
-			cws.websocket.send(message);
+			var message = { body: message , type: "message" };
+			if(cws.currentUser != null){
+				message['destinataryId'] = cws.currentUser.id;
+			}
+			cws.websocket.send(JSON.stringify(message));
 			if(callback) callback();
 		},
 		selectUser: function(id){
@@ -99,10 +106,16 @@ var CWS = function(options ) {
 				cws.clearTextArea();
 				arrMessages = cws.currentUser["messages"] || [];
 				if(arrMessages.length > 0){
+					var div = document.createElement("div");
+					div.id = "area";
 					for(i = 0 ; i < arrMessages.length ; i++){
 						var json = arrMessages[i];
-						cws.appendText(json.date  + " - " + json.userWhoSend + ": " + json.body , json.level );
+						var textElement = cws.createTextElement( json.date  + " - " + json.userWhoSend + ": " + json.body , json.level  );
+						div.appendChild( textElement );
 					}
+					var area = document.getElementById("area");
+					area.parentNode.replaceChild( div , area );
+					div.scrollTop = div.scrollHeight;
 				}
 			}
 		}

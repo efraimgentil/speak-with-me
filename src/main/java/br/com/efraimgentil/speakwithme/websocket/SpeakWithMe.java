@@ -43,13 +43,17 @@ public class SpeakWithMe {
   }
   
   @OnMessage
-  public void receiveAsString(IncomingMessage incomingMessage, Session session){
-    incomingMessage.setUser( extranctUser(session) );
-    System.out.println( incomingMessage );
-    try {
-        chat.receiveMessage( incomingMessage , session);
-    } catch (IOException | EncodeException e) {
-      e.printStackTrace();
+  public void receiveIncomingMessage(IncomingMessage incomingMessage, Session session){
+    if(incomingMessage != null){
+      incomingMessage.setUser( extranctUser(session) );
+      System.out.println( incomingMessage );
+      try {
+          chat.handleIncomingMessage( incomingMessage , session);
+      } catch (IOException | EncodeException e) {
+        e.printStackTrace();
+      }
+    }else{
+      System.out.println("Decoding error! no message available");
     }
   }
   

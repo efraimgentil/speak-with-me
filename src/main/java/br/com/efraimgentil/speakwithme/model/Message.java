@@ -11,6 +11,7 @@ public class Message implements Serializable {
   
   private String userId;
   private String userWhoSend;
+  private String destinataryId;
   private Date date;
   private String body;
   private MessageLevel level;
@@ -85,13 +86,17 @@ public class Message implements Serializable {
   public void setLevel(MessageLevel level) {
     this.level = level;
   }
-
   public String getUserId() {
     return userId;
   }
-
   public void setUserId(String userId) {
     this.userId = userId;
+  }
+  public String getDestinataryId() {
+    return destinataryId;
+  }
+  public void setDestinataryId(String destinataryId) {
+    this.destinataryId = destinataryId;
   }
 
 }

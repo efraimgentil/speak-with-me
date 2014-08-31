@@ -11,6 +11,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import br.com.efraimgentil.speakwithme.model.IncomingMessage;
 import br.com.efraimgentil.speakwithme.model.Message;
 import br.com.efraimgentil.speakwithme.model.User;
 import br.com.efraimgentil.speakwithme.model.constants.SessionKeys;
@@ -19,7 +20,7 @@ import br.com.efraimgentil.speakwithme.service.Chat;
 
 @ServerEndpoint(value = "/speak/"
 , encoders = { MessageEncoder.class  , GuestsEncoder.class , GuestEncoder.class }
-, decoders = { MessageDecoder.class }
+, decoders = { IncomingMessageDecoder.class , StringDecoder.class }
 , configurator = CustomConfigurator.class)
 public class SpeakWithMe {
   
@@ -42,12 +43,11 @@ public class SpeakWithMe {
   }
   
   @OnMessage
-  public void receiveAsString(String message , Session session){
-    System.out.println("AS STRING");
-    System.out.println( message );
-//    System.out.println( asMessage );
+  public void receiveAsString(IncomingMessage incomingMessage, Session session){
+    incomingMessage.setUser( extranctUser(session) );
+    System.out.println( incomingMessage );
     try {
-        chat.receiveMessage( (String) message, session);
+        chat.receiveMessage( incomingMessage , session);
     } catch (IOException | EncodeException e) {
       e.printStackTrace();
     }
@@ -58,7 +58,7 @@ public class SpeakWithMe {
 //    System.out.println("AS MESSAGE");
 //    try {
 //      System.out.println( message);
-//      chat.receiveMessage(message, session);
+////      chat.receiveMessage(message, session);
 //    } catch (IOException | EncodeException e) {
 //      e.printStackTrace();
 //    }
@@ -68,6 +68,11 @@ public class SpeakWithMe {
   public void error(Throwable e){
     System.out.println( "Sorry but there is a error, closing!" );
     System.out.println( e.getMessage() );
+  }
+  
+  private User extranctUser(Session session){
+    HttpSession httpSession = (HttpSession) session.getUserProperties().get( WsSessionKeys.HTTP_SESSION );
+    return (User) httpSession.getAttribute( SessionKeys.USER_AUTHENTICATED );
   }
 
 }

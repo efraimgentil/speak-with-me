@@ -7,11 +7,11 @@ import static org.junit.Assert.*;
 
 public class MessageDecoderTest {
   
-  MessageDecoder decoder;
+  IncomingMessageDecoder decoder;
   
   @Before
   public void setUp(){
-    decoder = new MessageDecoder();
+    decoder = new IncomingMessageDecoder();
   }
   
   @Test

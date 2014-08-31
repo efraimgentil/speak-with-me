@@ -6,7 +6,7 @@ import javax.websocket.EndpointConfig;
 
 import br.com.efraimgentil.speakwithme.model.Message;
 
-public class MessageDecoder implements Decoder.Text<Message> {
+public class StringDecoder implements Decoder.Text<String> {
 
   public void init(EndpointConfig config) {
     // TODO Auto-generated method stub
@@ -16,14 +16,11 @@ public class MessageDecoder implements Decoder.Text<Message> {
     // TODO Auto-generated method stub
   }
 
-  public Message decode(String s) throws DecodeException {
-    return new Message();
+  public String decode(String s) throws DecodeException {
+    return s;
   }
 
   public boolean willDecode(String s) {
-    if(s.toLowerCase().contains("\"type\":\"message\"")){
-      return true;
-    }
     return true;
   }
 

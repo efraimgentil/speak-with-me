@@ -52,6 +52,14 @@ public class Message implements Serializable {
     return m;
   }
   
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("Message [userId=").append(userId).append(", userWhoSend=").append(userWhoSend)
+        .append(", date=").append(date).append(", body=").append(body).append(", level=")
+        .append(level).append("]");
+    return builder.toString();
+  }
 
   public String getUserWhoSend() {
     return userWhoSend;

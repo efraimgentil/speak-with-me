@@ -10,6 +10,7 @@ import javax.websocket.RemoteEndpoint.Basic;
 import javax.websocket.Session;
 
 import br.com.efraimgentil.speakwithme.model.Guest;
+import br.com.efraimgentil.speakwithme.model.IncomingMessage;
 import br.com.efraimgentil.speakwithme.model.Message;
 import br.com.efraimgentil.speakwithme.model.User;
 import br.com.efraimgentil.speakwithme.model.constants.SessionKeys;
@@ -94,6 +95,20 @@ public class Chat {
 
   private boolean isOwner(User user){
     return UserType.OWNER.equals( user.getUserType() );
+  }
+
+  public void receiveMessage(IncomingMessage incomingMessage, Session session) throws IOException, EncodeException {
+    String username = incomingMessage.getUser().getUsername();
+    if(incomingMessage.isMessage()){
+      Message message = (Message) incomingMessage.getMessage();
+      session.getBasicRemote().sendObject( Message.userMessage(username, message.getBody() ) );
+      if(owner != null){
+        owner.getBasicRemote().sendObject( Message.userMessage( username , session.getId()  , message.getBody() ) );
+      }else{
+        session.getUserProperties().put( WsSessionKeys.OWNER_NOT_LOGGED , true );
+        session.getBasicRemote().sendObject( Message.infoMessage("The owner is not logged in, your message will be delivered when him enter") );
+      }
+    }
   }
 
 }

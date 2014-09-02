@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpSession;
 import javax.websocket.EncodeException;
 import javax.websocket.EndpointConfig;
+import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
@@ -57,16 +58,14 @@ public class SpeakWithMe {
     }
   }
   
-//  @OnMessage
-//  public void receiveAsMessage(Message message, Session session){
-//    System.out.println("AS MESSAGE");
-//    try {
-//      System.out.println( message);
-////      chat.receiveMessage(message, session);
-//    } catch (IOException | EncodeException e) {
-//      e.printStackTrace();
-//    }
-//  }
+  @OnClose
+  public void handleClose(Session session){
+    try {
+      chat.handleCloseConnection(session);
+    } catch (IOException | EncodeException e) {
+      e.printStackTrace();
+    }
+  }
   
   @OnError
   public void error(Throwable e){

@@ -8,14 +8,9 @@ var CWS = function(options ) {
 		websocket : null,
 		userListApender : options.userListApender || undefined,
 		usersOnline : { 
-			
 			length : function(){
 				var size = 0
-				for( k in this){
-					if(k != "length"){
-						size++;
-					}
-				}
+				for( k in this)	if(k != "length") size++;
 				return size;
 			}
 		},

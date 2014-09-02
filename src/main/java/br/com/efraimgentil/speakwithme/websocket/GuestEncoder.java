@@ -32,6 +32,7 @@ public class GuestEncoder implements Encoder.Text<Guest> {
     jg.writeStartObject("guest");
     jg.write( "id" , guest.getId() );
     jg.write( "userName" , guest.getUserName() );
+    jg.write( "email" , guest.getEmail() );
     jg.write( "status" , guest.getStatus() != null ? guest.getStatus() : "" );
     jg.writeEnd();
     jg.write( "type" , MessageType.UPDATE.toString() );

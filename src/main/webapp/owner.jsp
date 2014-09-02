@@ -82,26 +82,34 @@ ${cPath}
 		}
 
 	    function appendUser(guest){
-			var t1 = document.getElementById("user-template").cloneNode(true);
-			var asString = new XMLSerializer().serializeToString(t1);
-			for(key in guest) { 
-			  asString = asString.replace("{{{"+key+"}}}", guest[key]);
-		    }  
-			var div = document.createElement("div");
-			div.innerHTML = asString;
-			t1 = div.childNodes[0];
-			t1.classList.remove("template");
-			t1.classList.add("email-item");
-			t1.classList.add("pure-g");
-			t1.removeAttribute("xmlns");
-			t1.removeAttribute("id");
-			t1.onclick = selectUser;
-			var list = document.getElementById("list");
-			list.appendChild(t1);
+		    email = guest.email;
+		    var userFoundInView = document.querySelector("[data-email='" + guest.email + "']");
+		    if(userFoundInView != null){
+		        userFoundInView.dataset.id = guest.id;
+		        userFoundInView.dataset.email = guest.email;
+		        userFoundInView.classList.add("online");
+			}else{
+				var t1 = document.getElementById("user-template").cloneNode(true);
+				var asString = new XMLSerializer().serializeToString(t1);
+				for(key in guest) { 
+				  asString = asString.replace("{{{"+key+"}}}", guest[key]);
+			    }  
+				var div = document.createElement("div");
+				div.innerHTML = asString;
+				t1 = div.childNodes[0];
+				t1.classList.remove("template");
+				t1.classList.add("email-item");
+				t1.classList.add("pure-g");
+				t1.removeAttribute("xmlns");
+				t1.removeAttribute("id");
+				t1.onclick = selectUser;
+				var list = document.getElementById("list");
+				list.appendChild(t1);
+			}
 	    }
 
 	    function selectUser(){ 
-            var id = this.querySelector(".id").innerText;
+            var id = this.dataset.id;
             cws.selectUser(id);
             var arr = document.querySelectorAll(".email-item");
             for(i = 0 ; i < arr.length ; i++) {
@@ -111,8 +119,9 @@ ${cPath}
         }
 	</script>
 
-	<div id="user-template" class="template">
+	<div id="user-template" class="template" data-email="{{{email}}}" data-id="{{{id}}}" >
         <div class="hidden id">{{{id}}}</div>
+        <div class="hidden email">{{{email}}}</div>
 		<div class="pure-u-3-4">
 			<h5 class="email-name">{{{userName}}}</h5>
 		</div>

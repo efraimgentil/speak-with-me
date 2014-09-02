@@ -39,6 +39,7 @@ public class Chat {
         basicRemote.sendObject( Message.infoMessage("Sorry to inform you but owner of this chat is offline") );
       }else{
         Guest guest = new Guest( session.getId() , user.getUsername() );
+        guest.setEmail( user.getEmail() );
         sendToOwner(guest);
       }
     }
@@ -116,8 +117,8 @@ public class Chat {
       selfMessage.setLevel( MessageLevel.SENDER );
       session.getBasicRemote().sendObject( selfMessage );
 
-      if(message.getDestinataryId() != null && owner != null && session.getId().equals(owner.getId())){
-        Message userMessage = Message.userMessage(username, message.getDestinataryId() , message.getBody() ) ;
+      if(message.getDestinataryId() != null && isOwnerSession(session) ){
+        Message userMessage = Message.userMessage(username, message.getDestinataryId() , message.getBody() );
         sendToSession( userMessage , session , message.getDestinataryId());
       }
       
@@ -128,6 +129,30 @@ public class Chat {
         session.getBasicRemote().sendObject( Message.infoMessage("The owner is not logged in, your message will be delivered when him enter") );
       }
     }
+  }
+
+  public void handleCloseConnection(Session session) throws IOException, EncodeException {
+    if(isOwnerSession(session)){
+      owner = null;
+      List<Session> guestSessions = retriveGuestSession(session);
+      Message infoMessage = Message.infoMessage("The owner is now offline");
+      for (Session guestSession : guestSessions) {
+        guestSession.getBasicRemote().sendObject( infoMessage );
+      }
+    }else{
+      if(owner != null){
+        User user = extranctUser(session);
+        Message infoMessage = Message.infoMessage(user.getUsername() + " is now offline.");
+        infoMessage.setUserId( session.getId() );
+        owner.getBasicRemote().sendObject(infoMessage);
+      }
+    }
+    
+  }
+  
+  
+  protected boolean isOwnerSession(Session session){
+    return owner != null && owner.getId().equals( session.getId() );
   }
 
 }

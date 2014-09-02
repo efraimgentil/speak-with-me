@@ -6,6 +6,7 @@ public class Guest {
   
   private String id;
   private String userName;
+  private String email;
   private String status;
   private List<Message> messages;
 
@@ -70,6 +71,14 @@ public class Guest {
   }
   public void setMessages(List<Message> messages) {
     this.messages = messages;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
   }
   
 }

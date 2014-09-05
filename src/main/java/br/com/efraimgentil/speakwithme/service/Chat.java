@@ -24,9 +24,10 @@ public class Chat {
   private Session owner;
   
   public void connectUser( User user , Session session ) throws IOException, EncodeException{
+    session.getUserProperties().put(WsSessionKeys.USER_STATUS, "online" );
     Basic basicRemote = session.getBasicRemote();
     basicRemote.sendObject( Message.infoMessage("You are now connected") );
-    
+
     if( isOwner(user) ){
       owner = session;
       List<Session> guestsSessions = retriveGuestSession(session);
@@ -43,6 +44,9 @@ public class Chat {
         guest.setUpdateType(UpdateType.NEW_USER_CONNECTED);
         guest.setEmail( user.getEmail() );
         sendToOwner(guest);
+        Message infoMessage = Message.infoMessage( "User is now online" );
+        infoMessage.setUserId(session.getId() );
+        sendToOwner( infoMessage );
       }
     }
   }
@@ -52,6 +56,9 @@ public class Chat {
     for (Session sessionGuest : sessions) {
       User guestUser =  extranctUser(sessionGuest); 
       UserUpdate guest = new UserUpdate( sessionGuest.getId() , guestUser.getUsername() );
+      guest.setEmail( guestUser.getEmail() );
+      String status = (String)sessionGuest.getUserProperties().get( WsSessionKeys.USER_STATUS );
+      guest.setStatus(status);
       guests.add(guest);
     }
     return guests;

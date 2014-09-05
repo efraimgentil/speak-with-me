@@ -117,8 +117,6 @@ ${cPath}
 	</script>
 
 	<div id="user-template" class="template" data-email="{{{email}}}" data-id="{{{id}}}" >
-        <div class="hidden id">{{{id}}}</div>
-        <div class="hidden email">{{{email}}}</div>
 		<div class="pure-u-3-4">
 			<h5 class="email-name">{{{userName}}}</h5>
 		</div>

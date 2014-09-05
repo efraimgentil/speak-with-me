@@ -34,6 +34,7 @@ public class UsersUpdatesEncoder implements Encoder.Text<List<UserUpdate>> {
     for (UserUpdate guest : guests) {
       jg.writeStartObject();
       jg.write( "id" , guest.getId() );
+      jg.write( "email" , guest.getEmail() );
       jg.write( "userName" , guest.getUserName() );
       jg.write( "status" , guest.getStatus() != null ? guest.getStatus() : "" );
       jg.writeEnd();

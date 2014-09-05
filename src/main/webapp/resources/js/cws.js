@@ -72,8 +72,6 @@ var CWS = function(options ) {
 			}
 		},
 		onClose : function(data){
-			console.log("CLOSE");
-			console.log( data );
 			cws.appendText( "Connection closed ");
 		},
 		appendText: function(text , level){
@@ -123,6 +121,9 @@ var CWS = function(options ) {
 			}
 		}
 	};
+	window.onunload = function(){
+		cws.websocket.close();
+	}
 	return cws;
 };
 

@@ -19,15 +19,13 @@ import br.com.efraimgentil.speakwithme.model.constants.SessionKeys;
 import br.com.efraimgentil.speakwithme.model.constants.UserType;
 import br.com.efraimgentil.speakwithme.persistence.UserDAO;
 
-@WebServlet("/login")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/singon")
+public class SingonServlet extends HttpServlet {
   
   private static final long serialVersionUID = -8630368835759444475L;
   
   @Inject
   private UserDAO userDAO;
-  @Inject
-  private MongoClient client;
   
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
@@ -38,7 +36,6 @@ public class LoginServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
       IOException {
-    System.out.println( client );
     User user = new User();
     user.setEmail( req.getParameter("user.email")  );
     user.setPassword( req.getParameter("user.password" ));

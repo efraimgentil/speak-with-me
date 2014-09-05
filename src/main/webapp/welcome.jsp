@@ -20,7 +20,7 @@
 		<div id="login" class="pure-u-1">
 			<h1>Chat with WebSocket</h1>
 			<hr />
-			<c:if test="${message == null}">
+			<c:if test="${message == null && errorMap == null}">
 				<div id="initialQuestion">
 					<h3 class="email-content-title">Hello there! Are you already
 						signed in?</h3>
@@ -34,13 +34,19 @@
 				<fieldset>
 					<legend>Sing in</legend>
 					
-                    <cw:errorMessage attribute="#{message}" />
+                    <cw:errorMessage attribute="${errorMap['username']}" />
+                    <cw:errorMessage attribute="${errorMap['email']}" />
+                    <cw:errorMessage attribute="${errorMap['password']}" />
+                    <cw:errorMessage attribute="${errorMap['passwordConfirmation']}" />
+                    
+                    <label for="username">Username</label>
+                    <input id="username" name="username" type="text" placeholder="Username" value="${user.username}">
 					<label for="email">Email</label>
-					<input id="email" type="email" placeholder="Email">
+					<input id="email" name="email" type="email" placeholder="Email" value="${user.email}">
 					<label for="password">Password</label>
-					<input id="password" type="password" placeholder="Password">
-					<label for="confirmPassword">Confirm Password</label>
-					<input id="confirmPassword" type="password" placeholder="Password">
+					<input id="password" name="password" type="password" placeholder="Password" >
+					<label for="passwordConfirmation">Confirm Password</label>
+					<input id="passwordConfirmation" name="passwordConfirmation" type="password" placeholder="Confirm the password" >
 
 					<button type="submit" class="pure-button pure-button-primary">Sign
 						in</button>
@@ -49,7 +55,7 @@
 			</form>
 
 			<form id="form-singon" class="pure-form pure-form-stacked ${type != null && type == 'singon' ? '' :  'hidden' }"
-				action="${pageContext.request.contextPath}/login" method="post">
+				action="${pageContext.request.contextPath}/singon" method="post">
 				<fieldset>
 					<legend>Sing on</legend>
 					<cw:errorMessage attribute="${message}" />

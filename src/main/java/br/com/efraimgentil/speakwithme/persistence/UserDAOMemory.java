@@ -1,10 +1,18 @@
 package br.com.efraimgentil.speakwithme.persistence;
 
+import javax.enterprise.inject.Alternative;
+
 import br.com.efraimgentil.speakwithme.model.User;
 import br.com.efraimgentil.speakwithme.model.constants.UserType;
 
+@Alternative
 public class UserDAOMemory implements UserDAO {
 
+  @Override
+  public User persist(User user) {
+    return user;
+  }
+  
   @Override
   public User userByEmailAndPassword(String email, String password) {
     if("efraim.gentil@gmail.com".equals( email ) && "secretlol".equals(password) ){
@@ -30,6 +38,6 @@ public class UserDAOMemory implements UserDAO {
     u.setUserType( UserType.GUEST );
     return u;
   }
-  
+
 
 }

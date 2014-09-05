@@ -13,15 +13,14 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 import br.com.efraimgentil.speakwithme.model.IncomingMessage;
-import br.com.efraimgentil.speakwithme.model.Message;
 import br.com.efraimgentil.speakwithme.model.User;
 import br.com.efraimgentil.speakwithme.model.constants.SessionKeys;
 import br.com.efraimgentil.speakwithme.model.constants.WsSessionKeys;
 import br.com.efraimgentil.speakwithme.service.Chat;
 
 @ServerEndpoint(value = "/speak/"
-, encoders = { MessageEncoder.class  , GuestsEncoder.class , GuestEncoder.class }
-, decoders = { IncomingMessageDecoder.class , StringDecoder.class }
+, encoders = { MessageEncoder.class  , UsersUpdatesEncoder.class , UserUpdateEncoder.class }
+, decoders = { IncomingMessageDecoder.class }
 , configurator = CustomConfigurator.class)
 public class SpeakWithMe {
   

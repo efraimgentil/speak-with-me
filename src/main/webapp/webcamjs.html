@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="stuff, to, help, search, engines, not" name="keywords">
+<meta content="What this page is about." name="description">
+<meta content="Display Webcam Stream" name="title">
+<title>Display Webcam Stream</title>
+  
+<style>
+#container {
+    margin: 0px auto;
+    width: 500px;
+    height: 375px;
+    border: 10px #333 solid;
+}
+#videoElement {
+    width: 500px;
+    height: 375px;
+    background-color: #666;
+}
+</style>
+</head>
+  
+<body>
+<div id="container">
+    <video autoplay="true" id="videoElement">
+    </video>
+    <canvas id="snapshot" style="display:none"></canvas>
+    <button id="takeSnap">Tirar Foto</button>
+</div>
+<script>
+    var video = document.querySelector("#videoElement");
+    window.onload = function(){
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+         
+        if (navigator.getUserMedia) {       
+            navigator.getUserMedia({video: true}, handleVideo, videoError);
+        }
+         
+        function handleVideo(stream) {
+            video.src = window.URL.createObjectURL(stream);
+        }
+
+        function getSnapShot(){
+        }
+         
+        function videoError(e) {
+            // do something
+            console.log(e);
+        }
+
+        takeSnap.onclick = snap;
+    };
+
+    function snap() {
+        snapshot = document.getElementById("snapshot")
+        snapshot.width = video.clientWidth
+        snapshot.height = video.clientHeight
+
+        var c = snapshot.getContext("2d")
+        c.drawImage( video , 0, 0, snapshot.width, snapshot.height)
+
+        var link = document.createElement("a");
+        link.href = snapshot.toDataURL("image/png");
+        link.download = new Date().toISOString() +  "-image.png";
+        link.click();
+      }
+</script>
+</body>
+</html>

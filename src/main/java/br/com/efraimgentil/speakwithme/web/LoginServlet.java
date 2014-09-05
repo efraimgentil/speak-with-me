@@ -19,14 +19,14 @@ import br.com.efraimgentil.speakwithme.persistence.UserDAO;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
   
+  private static final long serialVersionUID = -8630368835759444475L;
+  
   @Inject
   private UserDAO userDAO;
   
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
       IOException {
-    HttpSession session = req.getSession(true);
-    session.setAttribute("authenticated", "YEAH BABY");
     super.doGet(req, resp);
   }
   

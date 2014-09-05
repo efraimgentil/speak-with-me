@@ -8,25 +8,25 @@ import javax.websocket.EncodeException;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.efraimgentil.speakwithme.model.Guest;
+import br.com.efraimgentil.speakwithme.model.UserUpdate;
 import br.com.efraimgentil.speakwithme.model.constants.MessageType;
 import static  org.junit.Assert.*;
 
-public class GuestEncoderTest {
+public class UserUpdateEncoderTest {
   
-  private GuestsEncoder guestsEncoder;
+  private UsersUpdatesEncoder guestsEncoder;
   
   @Before
   public void setUp(){
-    guestsEncoder = new GuestsEncoder();
+    guestsEncoder = new UsersUpdatesEncoder();
   }
   
   @Test
   public void doesEncodeToJSONAListOfGuests () throws EncodeException{
-    List<Guest> guests = new ArrayList<>();
-    guests.add( new Guest( "SESSION ID 1" , "USER NAME 1") );
-    guests.add( new Guest( "SESSION ID 2" , "USER NAME 2") );
-    guests.add( new Guest( "SESSION ID 3" , "USER NAME 3") );
+    List<UserUpdate> guests = new ArrayList<>();
+    guests.add( new UserUpdate( "SESSION ID 1" , "USER NAME 1") );
+    guests.add( new UserUpdate( "SESSION ID 2" , "USER NAME 2") );
+    guests.add( new UserUpdate( "SESSION ID 3" , "USER NAME 3") );
     
     String encoded = guestsEncoder.encode( guests );
     
@@ -44,7 +44,7 @@ public class GuestEncoderTest {
   
   @Test
   public void doesReturnAEmptyEncodedJSONWhenThereIsNoGuests() throws EncodeException{
-    List<Guest> guests = new ArrayList<>();
+    List<UserUpdate> guests = new ArrayList<>();
     
     String encoded = guestsEncoder.encode( guests );
     
@@ -54,7 +54,7 @@ public class GuestEncoderTest {
   
   @Test
   public void doesIncludeMessageTypeToTheEncodedList() throws EncodeException{
-    List<Guest> guests = new ArrayList<>();
+    List<UserUpdate> guests = new ArrayList<>();
     
     String encoded = guestsEncoder.encode( guests );
     

@@ -2,17 +2,20 @@ package br.com.efraimgentil.speakwithme.model;
 
 import java.util.List;
 
-public class Guest {
+import br.com.efraimgentil.speakwithme.model.constants.UpdateType;
+
+public class UserUpdate {
   
   private String id;
   private String userName;
   private String email;
   private String status;
   private List<Message> messages;
+  private UpdateType updateType;
 
-  public Guest() {  }
+  public UserUpdate() {  }
   
-  public Guest(String id, String userName) {
+  public UserUpdate(String id, String userName) {
     super();
     this.id = id;
     this.userName = userName;
@@ -34,7 +37,7 @@ public class Guest {
       return false;
     if (getClass() != obj.getClass())
       return false;
-    Guest other = (Guest) obj;
+    UserUpdate other = (UserUpdate) obj;
     if (id == null) {
       if (other.id != null)
         return false;
@@ -79,6 +82,14 @@ public class Guest {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public UpdateType getUpdateType() {
+    return updateType;
+  }
+
+  public void setUpdateType(UpdateType updateType) {
+    this.updateType = updateType;
   }
   
 }

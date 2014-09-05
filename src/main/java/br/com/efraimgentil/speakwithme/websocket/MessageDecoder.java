@@ -13,7 +13,6 @@ import javax.websocket.Decoder;
 import javax.websocket.EndpointConfig;
 
 import br.com.efraimgentil.speakwithme.model.Message;
-import br.com.efraimgentil.speakwithme.model.constants.MessageType;
 
 public class MessageDecoder implements Decoder.Text<Message> {
 

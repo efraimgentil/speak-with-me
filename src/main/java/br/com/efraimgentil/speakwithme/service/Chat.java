@@ -9,12 +9,13 @@ import javax.websocket.EncodeException;
 import javax.websocket.RemoteEndpoint.Basic;
 import javax.websocket.Session;
 
-import br.com.efraimgentil.speakwithme.model.Guest;
+import br.com.efraimgentil.speakwithme.model.UserUpdate;
 import br.com.efraimgentil.speakwithme.model.IncomingMessage;
 import br.com.efraimgentil.speakwithme.model.Message;
 import br.com.efraimgentil.speakwithme.model.User;
 import br.com.efraimgentil.speakwithme.model.constants.MessageLevel;
 import br.com.efraimgentil.speakwithme.model.constants.SessionKeys;
+import br.com.efraimgentil.speakwithme.model.constants.UpdateType;
 import br.com.efraimgentil.speakwithme.model.constants.UserType;
 import br.com.efraimgentil.speakwithme.model.constants.WsSessionKeys;
 
@@ -29,7 +30,7 @@ public class Chat {
     if( isOwner(user) ){
       owner = session;
       List<Session> guestsSessions = retriveGuestSession(session);
-      List<Guest> guests = extractGuests(guestsSessions);
+      List<UserUpdate> guests = extractGuests(guestsSessions);
       if(!guests.isEmpty()){
         sendToSessions(guestsSessions, Message.infoMessage("The owner is now online") );
         sendToOwner( guests );
@@ -38,18 +39,19 @@ public class Chat {
       if(owner == null){
         basicRemote.sendObject( Message.infoMessage("Sorry to inform you but owner of this chat is offline") );
       }else{
-        Guest guest = new Guest( session.getId() , user.getUsername() );
+        UserUpdate guest = new UserUpdate( session.getId() , user.getUsername() );
+        guest.setUpdateType(UpdateType.NEW_USER_CONNECTED);
         guest.setEmail( user.getEmail() );
         sendToOwner(guest);
       }
     }
   }
   
-  private List<Guest> extractGuests(List<Session> sessions){
-    List<Guest> guests = new ArrayList<>();
+  private List<UserUpdate> extractGuests(List<Session> sessions){
+    List<UserUpdate> guests = new ArrayList<>();
     for (Session sessionGuest : sessions) {
       User guestUser =  extranctUser(sessionGuest); 
-      Guest guest = new Guest( sessionGuest.getId() , guestUser.getUsername() );
+      UserUpdate guest = new UserUpdate( sessionGuest.getId() , guestUser.getUsername() );
       guests.add(guest);
     }
     return guests;
@@ -144,12 +146,16 @@ public class Chat {
         User user = extranctUser(session);
         Message infoMessage = Message.infoMessage(user.getUsername() + " is now offline.");
         infoMessage.setUserId( session.getId() );
-        owner.getBasicRemote().sendObject(infoMessage);
+        
+        Basic basicRemote = owner.getBasicRemote();
+        basicRemote.sendObject(infoMessage);
+        UserUpdate userUpdate = new UserUpdate( session.getId() , "" );
+        userUpdate.setStatus("offline");
+        userUpdate.setUpdateType(UpdateType.USER_DESCONECT);
+        basicRemote.sendObject(userUpdate);
       }
     }
-    
   }
-  
   
   protected boolean isOwnerSession(Session session){
     return owner != null && owner.getId().equals( session.getId() );

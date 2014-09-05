@@ -50,6 +50,14 @@ var CWS = function(options ) {
 						cws.userListApender( guest );
 						cws.usersOnline[guest.id] = guest;
 					}
+					if("USER_DISCONNECT" == json.updateType ){
+						var user = cws.usersOnline[json.guest.userId];
+						var userFoundInView = document.querySelector("[data-id='" + json.guest.id + "']");
+						if(userFoundInView){
+							userFoundInView.classList.remove("online");
+							userFoundInView.classList.add( json.guest.status );
+						}
+					}
 				}
 			}
 			if("MESSAGE" == messageType){

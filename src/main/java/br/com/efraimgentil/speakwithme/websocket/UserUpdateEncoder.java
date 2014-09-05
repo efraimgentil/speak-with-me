@@ -31,7 +31,7 @@ public class UserUpdateEncoder implements Encoder.Text<UserUpdate> {
     jg.writeStartObject("guest");
     jg.write( "id" , guest.getId() );
     jg.write( "userName" , guest.getUserName() );
-    jg.write( "email" , guest.getEmail() );
+    jg.write( "email" , guest.getEmail() != null ? guest.getEmail()  : "" );
     jg.write( "status" , guest.getStatus() != null ? guest.getStatus() : "" );
     jg.writeEnd();
     jg.write( "type" , MessageType.UPDATE.toString() );

@@ -4,6 +4,6 @@ public enum UpdateType {
 
   USERS_CONNECTED,
   NEW_USER_CONNECTED,
-  USER_DESCONECT;
+  USER_DISCONNECT;
   
 }

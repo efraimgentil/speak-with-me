@@ -53,10 +53,6 @@ ${cPath}
 					</td>
 				</tr>
 			</table>
-			<!-- 		      <div class="email-content"> -->
-			<!-- 		          <div id="action-area" > -->
-			<!-- 		          </div> -->
-			<!-- 		      </div> -->
 		</div>
 	</div>
 	<script type="text/javascript">
@@ -100,6 +96,7 @@ ${cPath}
 				t1.classList.remove("template");
 				t1.classList.add("email-item");
 				t1.classList.add("pure-g");
+				t1.classList.add("online");
 				t1.removeAttribute("xmlns");
 				t1.removeAttribute("id");
 				t1.onclick = selectUser;

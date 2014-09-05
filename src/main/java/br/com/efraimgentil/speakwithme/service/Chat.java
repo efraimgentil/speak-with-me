@@ -151,7 +151,7 @@ public class Chat {
         basicRemote.sendObject(infoMessage);
         UserUpdate userUpdate = new UserUpdate( session.getId() , "" );
         userUpdate.setStatus("offline");
-        userUpdate.setUpdateType(UpdateType.USER_DESCONECT);
+        userUpdate.setUpdateType(UpdateType.USER_DISCONNECT);
         basicRemote.sendObject(userUpdate);
       }
     }

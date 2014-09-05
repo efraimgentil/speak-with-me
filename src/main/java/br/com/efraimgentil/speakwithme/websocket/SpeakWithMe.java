@@ -68,6 +68,7 @@ public class SpeakWithMe {
   
   @OnError
   public void error(Throwable e){
+    e.printStackTrace();
     System.out.println( "Sorry but there is a error, closing!" );
     System.out.println( e.getMessage() );
   }

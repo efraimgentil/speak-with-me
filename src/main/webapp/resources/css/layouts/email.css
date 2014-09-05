@@ -16,6 +16,16 @@ a {
 	color: #1b98f8;
 }
 
+.offline{
+	border: 1px solid red  !important;
+    border-right: 10px solid red  !important;
+}
+
+.online{
+    border: 1px solid green !important;
+    border-right: 10px solid green  !important;
+}
+
 p.info{
 	color: #336677;
 }

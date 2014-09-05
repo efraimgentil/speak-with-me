@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.mongodb.DB;
+import com.mongodb.MongoClient;
+
 import br.com.efraimgentil.speakwithme.model.User;
 import br.com.efraimgentil.speakwithme.model.constants.SessionKeys;
 import br.com.efraimgentil.speakwithme.model.constants.UserType;
@@ -23,6 +26,8 @@ public class LoginServlet extends HttpServlet {
   
   @Inject
   private UserDAO userDAO;
+  @Inject
+  private MongoClient client;
   
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
@@ -33,7 +38,7 @@ public class LoginServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
       IOException {
-    
+    System.out.println( client );
     User user = new User();
     user.setEmail( req.getParameter("user.email")  );
     user.setPassword( req.getParameter("user.password" ));
